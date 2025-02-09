@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Game } from '../../models/game';
 
@@ -11,7 +11,7 @@ import { Game } from '../../models/game';
 })
 export class GameComponent {
   pickCardAnimation = false;
-  currentCard: string | undefined = "";
+  currentCard: string | undefined = '';
 
   //Das "!" sagt TypeScript, dass wir es später initialisieren.
   game!: Game;
@@ -21,23 +21,21 @@ export class GameComponent {
     console.log(this.game);
   }
 
+  newGame() {
+    this.game = new Game();
+    console.log("Test");
+  }
+
   takeCard() {
     if (!this.pickCardAnimation) {
       this.currentCard = this.game.stack.pop();
       this.pickCardAnimation = true;
-      if(this.currentCard !== undefined){
-        this.game.playedCards.push(this.currentCard as string)
-      }
-      console.log("New Card:" + this.currentCard);
-      console.log("Game is ",this.game);
-
+      this.game.playedCards.push(this.currentCard);
+      console.log('New Card:' + this.currentCard);
+      console.log('Game is ', this.game);
       setTimeout(() => {
         this.pickCardAnimation = false;
       }, 1500);
     }
-  }
-
-  newGame() {
-    this.game = new Game();
   }
 }

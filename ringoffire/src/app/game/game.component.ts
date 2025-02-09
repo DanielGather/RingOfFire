@@ -11,10 +11,10 @@ import { Game } from '../../models/game';
 })
 export class GameComponent {
   pickCardAnimation = false;
-  currentCard: string | undefined = '';
+  currentCard: string = '';
 
   //Das "!" sagt TypeScript, dass wir es später initialisieren.
-  game!: Game;
+  game: Game | any;
 
   ngOnInit() {
     this.newGame();
@@ -23,19 +23,20 @@ export class GameComponent {
 
   newGame() {
     this.game = new Game();
-    console.log("Test");
+    console.log('Test');
   }
 
   takeCard() {
     if (!this.pickCardAnimation) {
-      this.currentCard = this.game.stack.pop();
-      this.pickCardAnimation = true;
-      this.game.playedCards.push(this.currentCard);
-      console.log('New Card:' + this.currentCard);
-      console.log('Game is ', this.game);
-      setTimeout(() => {
-        this.pickCardAnimation = false;
-      }, 1500);
+      let card = this.game.stack.pop();
+      if (card) {
+        this.currentCard = card;
+        this.pickCardAnimation = true;
+        setTimeout(() => {
+          this.pickCardAnimation = false;
+          this.game.playedCards.push(this.currentCard);
+        }, 1000);
+      }
     }
   }
 }

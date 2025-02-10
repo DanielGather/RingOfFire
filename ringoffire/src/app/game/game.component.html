@@ -7,6 +7,7 @@
 ></app-player>
 
 <div class="field">
+  <span *ngIf="clicked" class="warning">ADD A PLAYER</span>
   <div class="card-stack">
     <!-- CARD STACK -->
     <img
@@ -29,7 +30,6 @@
       src="assets/img/playing_cards-master/{{ card }}.png"
       alt=""
     />
-
     <!-- CURRENT CARD ANIMATION -->
     <img
       (click)="takeCard()"

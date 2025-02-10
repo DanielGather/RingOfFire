@@ -15,7 +15,7 @@ export class StartScreenComponent {
 
   newGame(){
     //START GAME
-    this.router.navigateByUrl('/game')
+    this.router.navigate(['/game'])
   }
 
 }

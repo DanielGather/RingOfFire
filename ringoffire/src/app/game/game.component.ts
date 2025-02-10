@@ -19,6 +19,7 @@ export class GameComponent {
   readonly dialog = inject(MatDialog);
   pickCardAnimation = false;
   currentCard: string = '';
+  clicked:boolean = false
 
   //Das "!" sagt TypeScript, dass wir es später initialisieren.
   game!: Game;
@@ -34,15 +35,19 @@ export class GameComponent {
   }
 
   takeCard() {
-    if (!this.pickCardAnimation) {
-      this.currentCard = this.game.stack.pop() as string;
-      this.pickCardAnimation = true;
-      this.game.currentPlayer++;
-      this.game.currentPlayer = this.game.currentPlayer % this.game.players.length
-      setTimeout(() => {
-        this.pickCardAnimation = false;
-        this.game.playedCards.push(this.currentCard);
-      }, 1000);
+    if(this.game.players.length > 0){
+      if (!this.pickCardAnimation) {
+        this.currentCard = this.game.stack.pop() as string;
+        this.pickCardAnimation = true;
+        this.game.currentPlayer++;
+        this.game.currentPlayer = this.game.currentPlayer % this.game.players.length
+        setTimeout(() => {
+          this.pickCardAnimation = false;
+          this.game.playedCards.push(this.currentCard);
+        }, 1000);
+      }
+    } else {
+      this.clicked = true;
     }
   }
 
@@ -51,6 +56,7 @@ export class GameComponent {
     dialogRef.afterClosed().subscribe(name => {
       if(name){
         this.game.players.push(name)
+        this.clicked = false;
       }
     });
   }

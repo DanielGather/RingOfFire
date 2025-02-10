@@ -2,7 +2,7 @@
   width: 100vw;
   height: 100vh;
   width: 100%;
-  background-image: url('/assets/img/board-background.jpg');
+  background-image: url('../../assets/img/board-background.jpg');
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,7 +18,7 @@
 
 .pick-card {
   transition: all 125ms ease-in-out;
-  animation: pick-card-animation 1.1s ease-in-out;
+  animation: pick-card-animation 1.250s ease-in-out;
   transform: scale(1.3) translateX(120px) translateY(-200px) rotate(-10deg);
 
 }
@@ -53,6 +53,7 @@
   position: absolute;
   right: 32px;
   bottom: 32px;
+  z-index: 2;
 }
 
 .pin-bottom{
@@ -60,4 +61,18 @@
     bottom: 32px;
     left: 100px;
     right: 100px;
+}
+
+.warning{
+  display: flex;
+  font-family: sans-serif;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  width: 100%;
+  height: 100vh;
+  font-size: 64px;
+  position: absolute;
+  z-index: 1;
+  background-color: rgba(100,100,100, 0.8);
 }

@@ -3,10 +3,10 @@
   <p>Please enter the name of a player</p>
   <mat-form-field>
     <mat-label>Name</mat-label>
-    <input matInput [(ngModel)]="name" />
+    <input  matInput [(ngModel)]="name" />
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [disabled]="name.length == 0" [mat-dialog-close]="name" >Ok</button>
+  <button mat-button [attr.aria-hidden]="name.length > 0 ? 'true' : 'false'" [disabled]="name.length == 0" [mat-dialog-close]="name" >Ok</button>
 </mat-dialog-actions>

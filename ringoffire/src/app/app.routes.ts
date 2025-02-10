@@ -5,4 +5,5 @@ import { GameComponent } from './game/game.component';
 export const routes: Routes = [
     {path: '', component: StartScreenComponent},
     {path: 'game', component: GameComponent},
+    { path: '',   redirectTo: '/angular-projects/ringoffire/', pathMatch: 'full' }
 ];

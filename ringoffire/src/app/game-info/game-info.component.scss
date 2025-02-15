@@ -2,3 +2,9 @@
     padding-left: 16px;
     font-size: 24px;
 }
+
+mat-card{
+    @media (max-width:720px){
+        height: 145px;
+    }
+}

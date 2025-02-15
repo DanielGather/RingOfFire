@@ -12,9 +12,6 @@ import { onSnapshot, doc } from '@angular/fire/firestore';
   imports: [
     CommonModule,
     RouterOutlet,
-    RouterLink,
-    RouterLinkActive,
-    AsyncPipe,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

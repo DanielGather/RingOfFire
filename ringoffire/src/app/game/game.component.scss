@@ -47,6 +47,7 @@
 .player-position{
   position: absolute;
   right: 0;
+  z-index: 1;
 }
 
 .btn-add{
@@ -54,6 +55,9 @@
   right: 32px;
   bottom: 32px;
   z-index: 2;
+  @media (max-width:720px){
+    bottom: 0px;
+  }
 }
 
 .pin-bottom{
@@ -61,6 +65,11 @@
     bottom: 32px;
     left: 100px;
     right: 100px;
+     @media (max-width: 720px){
+      left:0;
+      right: 0;
+      bottom: 0;
+     }
 }
 
 .warning{
@@ -75,4 +84,16 @@
   position: absolute;
   z-index: 1;
   background-color: rgba(100,100,100, 0.8);
+}
+
+.scroll-container{
+  display: flex;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  overflow-x: auto;
+  app-player-mobile{
+    margin-left: 10px;
+  }
 }

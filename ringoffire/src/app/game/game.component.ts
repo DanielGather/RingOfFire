@@ -16,6 +16,7 @@ import {
   updateDoc,
   UpdateData,
 } from '@angular/fire/firestore';
+import { PlayerMobileComponent } from '../player-mobile/player-mobile.component';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -27,6 +28,7 @@ import { ActivatedRoute } from '@angular/router';
     MatIconModule,
     MatButtonModule,
     GameInfoComponent,
+    PlayerMobileComponent
   ],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss',
@@ -36,8 +38,7 @@ export class GameComponent {
 
   firestore: Firestore = inject(Firestore);
   readonly dialog = inject(MatDialog);
-  pickCardAnimation = false;
-  currentCard: string = '';
+
   clicked: boolean = false;
   gameSubscription: any;
   routeSubscription: any;
@@ -51,15 +52,17 @@ export class GameComponent {
     this.routeSubscription = this.route.params.subscribe((params) => {
       const id = params['id'];
       this.gameId = id;
-      if (id) {
+      console.log('ID aus der URL:', id);      if (id) {
         const gameDocRef = doc(this.firestore, 'games', id);
-        this.gameSubscription = docData(gameDocRef).subscribe((game) => {
-          this.game = game as Game;
-          if (game) {
-            this.game.currentPlayer = game['currentPlayer'];
-            this.game.playedCards = game['playedCards'];
-            this.game.players = game['players'];
-            this.game.stack = game['stack'];
+        this.gameSubscription = docData(gameDocRef).subscribe((gameData) => {
+          this.game = new Game();
+          if (gameData) {
+            this.game.currentPlayer = gameData['currentPlayer'];
+            this.game.playedCards = gameData['playedCards'];
+            this.game.players = gameData['players'];
+            this.game.stack = gameData['stack'];
+            this.game.pickCardAnimation = gameData['pickCardAnimation'];
+            this.game.currentCard = gameData['currentCard'];
           }
         });
       }
@@ -82,15 +85,15 @@ export class GameComponent {
 
   takeCard() {
     if (this.game.players.length > 0) {
-      if (!this.pickCardAnimation) {
-        this.currentCard = this.game.stack.pop() as string;
-        this.saveGame();
-        this.pickCardAnimation = true;
+      if (!this.game.pickCardAnimation) {
+        this.game.currentCard = this.game.stack.pop() as string;
+        this.game.pickCardAnimation = true;
         this.game.currentPlayer++;
         this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
+        this.saveGame();
         setTimeout(() => {
-          this.pickCardAnimation = false;
-          this.game.playedCards.push(this.currentCard);
+          this.game.pickCardAnimation = false;
+          this.game.playedCards.push(this.game.currentCard);
         this.saveGame();
         }, 1000);
       }
@@ -112,7 +115,6 @@ export class GameComponent {
 
   saveGame() {
     const gameDocRef = doc(this.firestore, 'games', this.gameId);
-    console.log(this.game);
     updateDoc(gameDocRef, this.game.toJson())
       .then(() => console.log('Dokument erfolgreich aktualisiert'))
       .catch((error) =>

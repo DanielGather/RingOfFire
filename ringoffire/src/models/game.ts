@@ -17,7 +17,7 @@ export class Game {
 
     public toJson(){
         return {
-            player: this.players,
+            players: this.players,
             stack : this.stack,
             playedCards : this.playedCards,
             currentPlayer : this.currentPlayer
